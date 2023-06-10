@@ -1,6 +1,7 @@
 const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
 let ReferenceValue = 9;
+let insertedValues = [0];
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -38,9 +39,17 @@ function checkInput(buttonId, gridName) {
                 return;
             }
         displayInput(buttonId);
+        storeInput(buttonId, gridName);
+    }
+    if (buttonId == " = ") {
+        calculate(insertedValues);
     }
 }
 
 function displayInput(buttonId) {
         visor.textContent += buttonId;
+}
+
+function storeInput(button, grid) {  
+    insertedValues.push(button);
 }
