@@ -11,6 +11,17 @@ button {
   width: 52px;
 }
 
+p {
+  margin: 5px 0 0 0;
+  align-items: flex-start;
+  justify-content: flex-start;
+  font-size: 30px;
+  font-weight: bolder;
+  font-style: italic;
+  text-shadow: 1px 1px 2px black;
+}
+
+
 .container {
     display: flex;
     flex-direction: column;
@@ -43,14 +54,29 @@ button {
   flex-wrap: wrap;
   flex: 1;
   width: 280px;
-  gap: 5px;
 
 }
 
-.top-buttons {
+#top-buttons {
   justify-content: end;
+  margin-right: 20px;
 }
 
 #middle-buttons {
   justify-content: center;
+}
+
+#bottom-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+#number-grid > .big-buttons {
+  margin: 0 0 10px 0px;
+  width: 157px;
+}
+
+#operator-grid > .big-buttons {
+  width: 108px;
 }

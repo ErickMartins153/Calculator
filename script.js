@@ -7,13 +7,15 @@ for (let i = 0; i < 3; i++) {
             const btn = document.createElement('button');
             btnGrid.appendChild(btn);
             btn.textContent = j;
+            btn.setAttribute('id', j);
         }
         ReferenceValue -= 3;
         if (ReferenceValue < 3) {
             const zero = document.createElement('button');
             btnGrid.appendChild(zero);
             zero.textContent = ReferenceValue;
+            zero.setAttribute('id', '0');
+            zero.classList.add('big-buttons');
         }
-
     }
 }
