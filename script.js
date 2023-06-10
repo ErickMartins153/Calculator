@@ -27,5 +27,12 @@ buttonGrid.addEventListener('click', event => {
     if (!isButton){
         return;
     }
-    console.dir(event.target.id);
+    displayInput(event.target.id, event.target.parentNode.id);
 })
+
+function displayInput(buttonId, gridName) {
+    const visor = document.querySelector('#display');
+    if(buttonId != " = "  && gridName != 'middle-buttons' && gridName != 'top-buttons'){
+        visor.textContent += buttonId;
+    }
+}
