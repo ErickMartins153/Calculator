@@ -6,6 +6,11 @@ body {
   min-height: 100%;
 }
 
+button {
+  border-radius: 15px;
+  width: 52px;
+}
+
 .container {
     display: flex;
     flex-direction: column;
@@ -18,6 +23,7 @@ body {
   display: flex;
   justify-content: center;
   align-content: center;
+  padding-bottom: 15px;
   border-style: solid;
   border-radius: 15px;
   width: 300px;
@@ -28,16 +34,23 @@ body {
   border-radius: 10px;
   padding: 30px;
   margin-top: 10px;
-  width: 150px;
+  width: 200px;
+  height: 50px;
 }
 
 .button-grid {
   display: flex;
+  flex-wrap: wrap;
   flex: 1;
-  justify-content: end;
   width: 280px;
+  gap: 5px;
+
 }
 
-button {
-  border-radius: 15px;
+.top-buttons {
+  justify-content: end;
+}
+
+#middle-buttons {
+  justify-content: center;
 }
