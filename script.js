@@ -2,6 +2,8 @@ const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
 let ReferenceValue = 9;
 let insertedValues = [];
+let index = 0;
+let numberJoined = [];
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -42,7 +44,7 @@ function checkInput(buttonId, gridName) {
         storeInput(buttonId, gridName);
     }
     if (buttonId == " = ") {
-        calculate(insertedValues);
+        joinNumber(insertedValues);
     }
 }
 
@@ -58,7 +60,7 @@ function storeInput(button, grid) {
     }
 }
 
-function calculate(array) {
+function joinNumber(array) {
     let result = '';
     if (insertedValues.length == 0) {
         insertedValues.push(0);
@@ -66,6 +68,11 @@ function calculate(array) {
     array.map(element => {
         if (!isNaN(parseInt(element))) {
             result += element.toString();
+        } else {
+            getOperation(element);
         }
     });
+    numberJoined[index] = result;
+    index++;
+    console.log(numberJoined);
 }
