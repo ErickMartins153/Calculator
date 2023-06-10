@@ -1,7 +1,7 @@
 const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
 let ReferenceValue = 9;
-let insertedValues = [0];
+let insertedValues = [];
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -51,5 +51,21 @@ function displayInput(buttonId) {
 }
 
 function storeInput(button, grid) {  
+    if (grid == 'number-grid') {
+        insertedValues.push(button);
+    } else{
     insertedValues.push(button);
+    }
+}
+
+function calculate(array) {
+    let result = '';
+    if (insertedValues.length == 0) {
+        insertedValues.push(0);
+    }
+    array.map(element => {
+        if (!isNaN(parseInt(element))) {
+            result += element.toString();
+        }
+    });
 }
