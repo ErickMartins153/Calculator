@@ -1,9 +1,11 @@
 const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
 let ReferenceValue = 9;
-let insertedValues = [];
 let index = 0;
+let insertedValues = [];
 let numberJoined = [];
+let operations = []
+let operatorDetected = false;
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -36,16 +38,20 @@ buttonGrid.addEventListener('click', event => {
 
 function checkInput(buttonId, gridName) {
     let lastCharacter = visor.textContent.slice(-1);
-    if(buttonId != " = "  && gridName != 'middle-buttons' && gridName != 'top-buttons'){
-            if (isNaN(parseInt(buttonId)) && isNaN(parseInt(lastCharacter))) {
-                return;
-            }
-        displayInput(buttonId);
+    if(gridName == 'operator-grid') {
+        if (isNaN(parseInt(buttonId)) && isNaN(parseInt(lastCharacter))) {
+            return;
+        }
+        if(insertedValues.length == 0){
+            return;
+        }
+        storeInput(buttonId, gridName)
+        joinNumber(insertedValues)
+    }
+    if(buttonId != " = "  && gridName == 'number-grid'){
         storeInput(buttonId, gridName);
     }
-    if (buttonId == " = ") {
-        joinNumber(insertedValues);
-    }
+    displayInput(buttonId)
 }
 
 function displayInput(buttonId) {
@@ -55,8 +61,8 @@ function displayInput(buttonId) {
 function storeInput(button, grid) {  
     if (grid == 'number-grid') {
         insertedValues.push(button);
-    } else{
-    insertedValues.push(button);
+    } else {
+        getOperation(button);
     }
 }
 
@@ -68,11 +74,22 @@ function joinNumber(array) {
     array.map(element => {
         if (!isNaN(parseInt(element))) {
             result += element.toString();
-        } else {
-            getOperation(element);
         }
     });
     numberJoined[index] = result;
     index++;
-    console.log(numberJoined);
+    insertedValues = [];
+    console.log(numberJoined)
+}
+
+function getOperation(operator) {
+    let result = 0;
+    if (operator == " = " && operatorDetected == true){
+        
+    }
+    if (operator != " = ") {
+        operations[index] = operator;
+        operatorDetected = true;
+    }
+    console.log(operations);
 }
