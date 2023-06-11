@@ -38,20 +38,23 @@ buttonGrid.addEventListener('click', event => {
 
 function checkInput(buttonId, gridName) {
     let lastCharacter = visor.textContent.slice(-1);
-    if(gridName == 'operator-grid') {
+    if (gridName == 'middle-buttons' || gridName == 'top-buttons') {
+        return;
+    }
+    if (gridName == 'operator-grid') {
         if (isNaN(parseInt(buttonId)) && isNaN(parseInt(lastCharacter))) {
             return;
         }
         if(insertedValues.length == 0){
             return;
         }
-        storeInput(buttonId, gridName)
-        joinNumber(insertedValues)
+         storeInput(buttonId, gridName);
+         joinNumber(insertedValues);
     }
     if(buttonId != " = "  && gridName == 'number-grid'){
         storeInput(buttonId, gridName);
     }
-    displayInput(buttonId)
+    displayInput(buttonId);
 }
 
 function displayInput(buttonId) {
@@ -76,20 +79,34 @@ function joinNumber(array) {
             result += element.toString();
         }
     });
-    numberJoined[index] = result;
+    numberJoined[index] = parseInt(result);
     index++;
     insertedValues = [];
-    console.log(numberJoined)
 }
 
 function getOperation(operator) {
-    let result = 0;
     if (operator == " = " && operatorDetected == true){
-        
+        for (let i = 0; i < operations.length; i++) {
+            if (operations[i] == " + ") {
+                joinNumber(insertedValues);
+                sum();
+            }
+        }
     }
     if (operator != " = ") {
-        operations[index] = operator;
         operatorDetected = true;
     }
+    operations[index] = operator;
     console.log(operations);
 }
+
+function sum() {
+    let result = 0;
+    for (let i = 0; i < numberJoined.length; i++) {
+        result += numberJoined[i];
+    }
+    alert(result)
+}
+
+//check using a for if the element is in operations array, if it is, jump
+//that way get just the numbers and realize the right operation with it
