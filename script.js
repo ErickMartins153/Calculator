@@ -54,7 +54,8 @@ function checkInput(buttonId, gridName) {
     if(buttonId != " = "  && gridName == 'number-grid'){
         storeInput(buttonId, gridName);
     }
-    displayInput(buttonId);
+    buttonId == " = " ? 0:displayInput(buttonId);
+    
 }
 
 function displayInput(buttonId) {
@@ -87,9 +88,14 @@ function joinNumber(array) {
 function getOperation(operator) {
     if (operator == " = " && operatorDetected == true){
         for (let i = 0; i < operations.length; i++) {
+            displayInput(operator);
             if (operations[i] == " + ") {
                 joinNumber(insertedValues);
                 sum();
+            }
+            if (operations[i] == " - ") {
+                joinNumber(insertedValues);
+                subtract();
             }
         }
     }
@@ -105,7 +111,11 @@ function sum() {
     for (let i = 0; i < numberJoined.length; i++) {
         result += numberJoined[i];
     }
-    alert(result)
+    displayInput(result);
+}
+
+function subtract() {
+    displayInput(numberJoined.reduce((total, currentValue) => total - currentValue));
 }
 
 //check using a for if the element is in operations array, if it is, jump
