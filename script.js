@@ -1,11 +1,14 @@
 const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
+const AC = document.querySelector('#AC');
+const OFF = document.querySelector('#OFF');
 let ReferenceValue = 9;
 let index = 0;
 let insertedValues = [];
 let numberJoined = [];
 let operations = []
 let operatorDetected = false;
+let isOnline = true;
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -30,11 +33,33 @@ const buttonGrid = document.querySelector('.button-grid');
 
 buttonGrid.addEventListener('click', event => {
     const isButton = event.target.nodeName === 'BUTTON';
-    if (!isButton){
+    if (!isButton || isOnline == false){
         return;
     }
     checkInput(event.target.id, event.target.parentNode.id);
-})
+});
+
+AC.addEventListener('click', clearAll());
+
+OFF.addEventListener('click', event => {
+    if (isOnline == true) {
+        clearAll();
+        OFF.textContent = 'ON';
+        isOnline = false;
+    } else {
+        OFF.textContent = 'OFF';
+        isOnline = true;
+    }
+});
+
+function clearAll() {
+        index = 0;
+        insertedValues = [];
+        numberJoined = [];
+        operations = [];
+        operatorDetected = false;
+        visor.textContent = '';
+}
 
 function checkInput(buttonId, gridName) {
     let lastCharacter = visor.textContent.slice(-1);
