@@ -6,7 +6,7 @@ const sound = document.querySelector('#sound');
 const audio = new Audio("/src/calculator-sound.mp3");
 let ReferenceValue = 9;
 let index = 0;
-let lastResult = 0
+let lastResult = 'placeholder';
 let insertedValues = [];
 let numberJoined = [];
 let operations = [];
@@ -92,10 +92,10 @@ function checkInput(buttonId, buttonGrid) {
             operations = [];
             operatorDetected = false;
             operationDone = false;
+            visor.textContent = lastResult;
             insertedValues.push(lastResult);
         }
     }
-
     let lastCharacter = visor.textContent.slice(-1);
     if (buttonGrid == 'middle-buttons' || buttonGrid == 'top-buttons') {
         return;
