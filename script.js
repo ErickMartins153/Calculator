@@ -2,11 +2,15 @@ const numberGrid = document.querySelector('#number-grid');
 const visor = document.querySelector('#display');
 const AC = document.querySelector('#AC');
 const OFF = document.querySelector('#OFF');
+const sound = document.querySelector('#sound');
+const audio = new Audio("/src/calculator-sound.mp3");
+audio.volume = 0.2;
+let isSoundOn = true;
 let ReferenceValue = 9;
 let index = 0;
 let insertedValues = [];
 let numberJoined = [];
-let operations = []
+let operations = [];
 let operatorDetected = false;
 let isOnline = true;
 
@@ -36,6 +40,10 @@ buttonGrid.addEventListener('click', event => {
     if (!isButton || isOnline == false){
         return;
     }
+    if (isSoundOn == true) {
+        audio.currentTime = 0;
+        audio.play();
+    }
     checkInput(event.target.id, event.target.parentNode.id);
 });
 
@@ -49,6 +57,14 @@ OFF.addEventListener('click', event => {
     } else {
         OFF.textContent = 'OFF';
         isOnline = true;
+    }
+});
+
+sound.addEventListener('click', function() {
+    if (isSoundOn == true) {
+        isSoundOn = false;
+    } else {
+        isSoundOn = true;
     }
 });
 
