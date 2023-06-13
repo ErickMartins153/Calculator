@@ -4,16 +4,18 @@ const AC = document.querySelector('#AC');
 const OFF = document.querySelector('#OFF');
 const sound = document.querySelector('#sound');
 const audio = new Audio("/src/calculator-sound.mp3");
-audio.volume = 0.05;
-let isSoundOn = true;
 let ReferenceValue = 9;
 let index = 0;
+let lastResult = 0
 let insertedValues = [];
 let numberJoined = [];
 let operations = [];
+let isSoundOn = true;
 let operatorDetected = false;
 let isOnline = true;
 let operationDone = false;
+
+audio.volume = 0.05;
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -75,13 +77,25 @@ function clearAll() {
         numberJoined = [];
         operations = [];
         operatorDetected = false;
+        operationDone = false;
         visor.textContent = '';
 }
 
 function checkInput(buttonId, buttonGrid) {
-    if (operationDone == true && buttonGrid == 'number-grid') {
-        clearAll();
+    if (operationDone == true) {
+        if (buttonGrid == 'number-grid'){
+            clearAll();
+        } else {
+            index = 0;
+            insertedValues = [];
+            numberJoined = [];
+            operations = [];
+            operatorDetected = false;
+            operationDone = false;
+            insertedValues.push(lastResult);
+        }
     }
+
     let lastCharacter = visor.textContent.slice(-1);
     if (buttonGrid == 'middle-buttons' || buttonGrid == 'top-buttons') {
         return;
@@ -160,25 +174,31 @@ function getOperation(operator) {
 }
 
 function sum() {
-    displayInput(numberJoined.reduce((total, currentValue) => total + currentValue));
+    lastResult = numberJoined.reduce((total, currentValue) => total + currentValue)
+    displayInput(lastResult);
 }
 
 function subtract() {
-    displayInput(numberJoined.reduce((total, currentValue) => total - currentValue));
+    lastResult = numberJoined.reduce((total, currentValue) => total - currentValue)
+    displayInput(lastResult);
 }
 
 function multiplication() {
-    displayInput(numberJoined.reduce((total, currentValue) => total * currentValue), 1);
+    lastResult = numberJoined.reduce((total, currentValue) => total * currentValue), 1;
+    displayInput(lastResult);
 }
 
 function division() {
-    displayInput(numberJoined.reduce((total, currentValue) => total / currentValue));
+    lastResult = numberJoined.reduce((total, currentValue) => total / currentValue)
+    displayInput(lastResult);
 }
 
 function squareRoot() {
-    displayInput(Math.sqrt(numberJoined[numberJoined.length - 1]));
+    lastResult = Math.sqrt(numberJoined[numberJoined.length - 1])
+    displayInput(lastResult);
 }
 
 function percentageOf() {
-    displayInput(numberJoined.reduce((value, percentage) => value * percentage / 100));
+    lastResult = numberJoined.reduce((value, percentage) => value * percentage / 100)
+    displayInput(lastResult);
 }
