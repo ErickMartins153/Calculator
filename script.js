@@ -13,6 +13,7 @@ let numberJoined = [];
 let operations = [];
 let operatorDetected = false;
 let isOnline = true;
+let operationDone = false;
 
 for (let i = 0; i < 3; i++) {
     if (ReferenceValue >= 3) {
@@ -77,26 +78,26 @@ function clearAll() {
         visor.textContent = '';
 }
 
-function checkInput(buttonId, gridName) {
+function checkInput(buttonId, buttonGrid) {
+    if (operationDone == true && buttonGrid == 'number-grid') {
+        clearAll();
+    }
     let lastCharacter = visor.textContent.slice(-1);
-    if (gridName == 'middle-buttons' || gridName == 'top-buttons') {
+    if (buttonGrid == 'middle-buttons' || buttonGrid == 'top-buttons') {
         return;
     }
-    if (gridName == 'operator-grid') {
-        if (isNaN(parseInt(buttonId)) && isNaN(parseInt(lastCharacter))) {
+    if (buttonGrid == 'operator-grid') {
+        operationDone = false;
+        if (isNaN(parseInt(buttonId)) && isNaN(parseInt(lastCharacter)) && buttonId != " √ ") {
             return;
         }
-        if(insertedValues.length == 0){
-            return;
-        }
-         storeInput(buttonId, gridName);
+         storeInput(buttonId, buttonGrid);
          joinNumber(insertedValues);
     }
-    if(buttonId != " = "  && gridName == 'number-grid'){
-        storeInput(buttonId, gridName);
+    if(buttonId != " = "  && buttonGrid == 'number-grid'){
+        storeInput(buttonId, buttonGrid);
     }
-    buttonId == " = " ? 0:displayInput(buttonId);
-    
+    buttonId == " = "  ? 0:displayInput(buttonId);
 }
 
 function displayInput(buttonId) {
@@ -140,13 +141,22 @@ function getOperation(operator) {
             if (operations[i] == " x ") {
                 multiplication();
             }
+            if (operations[i] == " ÷ ") {
+                division();
+            }
+            if (operations[i] == " √ ") {
+                squareRoot();
+            }
+            if (operations[i] == " % ") {
+                percentageOf();
+            }
+        operationDone = true;
         }
     }
     if (operator != " = ") {
         operatorDetected = true;
     }
     operations[index] = operator;
-    console.log(operations);
 }
 
 function sum() {
@@ -161,5 +171,14 @@ function multiplication() {
     displayInput(numberJoined.reduce((total, currentValue) => total * currentValue), 1);
 }
 
-//check using a for if the element is in operations array, if it is, jump
-//that way get just the numbers and realize the right operation with it
+function division() {
+    displayInput(numberJoined.reduce((total, currentValue) => total / currentValue));
+}
+
+function squareRoot() {
+    displayInput(Math.sqrt(numberJoined[numberJoined.length - 1]));
+}
+
+function percentageOf() {
+    displayInput(numberJoined.reduce((value, percentage) => value * percentage / 100));
+}
