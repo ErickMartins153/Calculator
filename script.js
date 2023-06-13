@@ -4,7 +4,7 @@ const AC = document.querySelector('#AC');
 const OFF = document.querySelector('#OFF');
 const sound = document.querySelector('#sound');
 const audio = new Audio("/src/calculator-sound.mp3");
-audio.volume = 0.2;
+audio.volume = 0.05;
 let isSoundOn = true;
 let ReferenceValue = 9;
 let index = 0;
@@ -47,7 +47,7 @@ buttonGrid.addEventListener('click', event => {
     checkInput(event.target.id, event.target.parentNode.id);
 });
 
-AC.addEventListener('click', clearAll());
+AC.addEventListener('click', clearAll);
 
 OFF.addEventListener('click', event => {
     if (isOnline == true) {
@@ -128,15 +128,17 @@ function joinNumber(array) {
 
 function getOperation(operator) {
     if (operator == " = " && operatorDetected == true){
+        joinNumber(insertedValues);
         for (let i = 0; i < operations.length; i++) {
             displayInput(operator);
             if (operations[i] == " + ") {
-                joinNumber(insertedValues);
                 sum();
             }
             if (operations[i] == " - ") {
-                joinNumber(insertedValues);
                 subtract();
+            }
+            if (operations[i] == " x ") {
+                multiplication();
             }
         }
     }
@@ -148,15 +150,15 @@ function getOperation(operator) {
 }
 
 function sum() {
-    let result = 0;
-    for (let i = 0; i < numberJoined.length; i++) {
-        result += numberJoined[i];
-    }
-    displayInput(result);
+    displayInput(numberJoined.reduce((total, currentValue) => total + currentValue));
 }
 
 function subtract() {
     displayInput(numberJoined.reduce((total, currentValue) => total - currentValue));
+}
+
+function multiplication() {
+    displayInput(numberJoined.reduce((total, currentValue) => total * currentValue), 1);
 }
 
 //check using a for if the element is in operations array, if it is, jump
