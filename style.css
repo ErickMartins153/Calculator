@@ -53,8 +53,9 @@ p {
   border-radius: 10px;
   padding: 30px;
   margin-top: 10px;
-  width: 200px;
+  width: 70%;
   height: 50px;
+  word-break: break-all;
 }
 
 .button-grid {
